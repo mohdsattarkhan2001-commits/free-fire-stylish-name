@@ -102,6 +102,16 @@ button {
   gap: 0.5rem;
 }
 
+.name-preview {
+  margin: 0 0 0.65rem;
+  padding: 0.55rem 0.7rem;
+  border-radius: 10px;
+  background: rgba(127, 91, 255, 0.12);
+  border: 1px solid rgba(127, 91, 255, 0.45);
+  color: #e8e1ff;
+  font-weight: 600;
+}
+
 button.ghost {
   background: #232946;
   color: #dae0ff;

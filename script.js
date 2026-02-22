@@ -92,7 +92,9 @@ function generate() {
   const styled = getStyledNames(activeName);
   const presets = buildPresets(activeName);
 
-  namePreview.textContent = `Preview: ${styled[0]}`;
+  if (namePreview) {
+    namePreview.textContent = `Preview: ${styled[0]}`;
+  }
   renderList(resultsList, styled);
   renderList(presetList, presets);
 }
