@@ -126,7 +126,9 @@ function renderList(list, values) {
   list.innerHTML = "";
   values.forEach((value) => {
     const clone = itemTemplate.content.cloneNode(true);
-    clone.querySelector(".result-text").textContent = value;
+    const textNode = clone.querySelector(".result-text");
+    textNode.textContent = value;
+    textNode.title = value;
     const copyBtn = clone.querySelector(".copy-btn");
     copyBtn.addEventListener("click", () => copyText(value, copyBtn));
     list.appendChild(clone);
