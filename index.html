@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Stylish Free Fire Name Generator</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="container">
+      <header class="hero">
+        <p class="tag">Free Fire nickname tool</p>
+        <h1>Stylish Name Generator</h1>
+        <p>
+          Create cool and unique Free Fire-style nicknames with symbols, fonts,
+          and decorative presets.
+        </p>
+      </header>
+
+      <section class="card input-card">
+        <label for="nicknameInput">Enter your name</label>
+        <div class="input-row">
+          <input id="nicknameInput" type="text" placeholder="e.g. Shadow" maxlength="20" />
+          <button id="generateBtn">Generate</button>
+        </div>
+        <div class="quick-actions">
+          <button id="randomBtn" class="ghost">Random name</button>
+          <button id="clearBtn" class="ghost">Clear</button>
+        </div>
+      </section>
+
+      <section class="card">
+        <div class="section-head">
+          <h2>Generated styles</h2>
+          <p>Click any result to copy instantly.</p>
+        </div>
+        <ul id="resultsList" class="results"></ul>
+      </section>
+
+      <section class="card">
+        <div class="section-head">
+          <h2>Decorative presets</h2>
+          <p>Ready-made name formats used by Free Fire players.</p>
+        </div>
+        <ul id="presetList" class="results"></ul>
+      </section>
+    </main>
+
+    <template id="resultItemTemplate">
+      <li class="result-item">
+        <span class="result-text"></span>
+        <button class="copy-btn">Copy</button>
+      </li>
+    </template>
+
+    <div id="toast" role="status" aria-live="polite"></div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
