@@ -127,7 +127,8 @@ function renderList(list, values) {
   values.forEach((value) => {
     const clone = itemTemplate.content.cloneNode(true);
     clone.querySelector(".result-text").textContent = value;
-    clone.querySelector(".copy-btn").addEventListener("click", () => copyText(value));
+    const copyBtn = clone.querySelector(".copy-btn");
+    copyBtn.addEventListener("click", () => copyText(value, copyBtn));
     list.appendChild(clone);
   });
 }
@@ -139,9 +140,13 @@ function showToast(message) {
   showToast.timeoutId = window.setTimeout(() => toast.classList.remove("show"), 1600);
 }
 
-async function copyText(value) {
+async function copyText(value, button) {
   try {
     await navigator.clipboard.writeText(value);
+    if (button) {
+      button.classList.add("copied");
+      window.setTimeout(() => button.classList.remove("copied"), 450);
+    }
     showToast("Copied to clipboard");
   } catch {
     showToast("Clipboard blocked in this browser");

@@ -162,13 +162,40 @@ button.ghost {
 
 .result-text {
   overflow-wrap: anywhere;
-  font-size: 1.05rem;
+  font-size: clamp(1.12rem, 1.5vw, 1.28rem);
+  font-weight: 700;
+  letter-spacing: 0.02em;
 }
 
 .copy-btn {
   background: #2f365a;
   color: #ffffff;
-  font-size: 0.85rem;
+  font-size: 0.74rem;
+  padding: 0.45rem 0.55rem;
+  border-radius: 8px;
+  transition: transform 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.copy-btn:hover {
+  background: #3b4470;
+}
+
+.copy-btn.copied {
+  animation: copyPulse 0.45s ease;
+  background: #29a36a;
+  box-shadow: 0 0 0 6px rgba(41, 163, 106, 0.18);
+}
+
+@keyframes copyPulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(0.9);
+  }
+  100% {
+    transform: scale(1);
+  }
 }
 
 #toast {
