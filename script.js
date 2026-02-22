@@ -24,7 +24,14 @@ const wrappers = [
 ];
 
 const randomWords = ["Ghost", "Ninja", "Sniper", "Raven", "Venom", "Blaze", "Storm", "Killer", "Hunter", "Viper"];
-const defaultPreviewName = "FONTIXA";
+
+function getRandomName() {
+  const word = randomWords[Math.floor(Math.random() * randomWords.length)];
+  const suffix = Math.floor(Math.random() * 90 + 10);
+  return `${word}${suffix}`;
+}
+
+let defaultPreviewName = getRandomName();
 
 function convertText(text, map) {
   return text
@@ -100,14 +107,13 @@ function generate() {
 }
 
 randomBtn.addEventListener("click", () => {
-  const word = randomWords[Math.floor(Math.random() * randomWords.length)];
-  const suffix = Math.floor(Math.random() * 90 + 10);
-  nicknameInput.value = `${word}${suffix}`;
+  nicknameInput.value = getRandomName();
   generate();
 });
 
 clearBtn.addEventListener("click", () => {
   nicknameInput.value = "";
+  defaultPreviewName = getRandomName();
   generate();
 });
 
