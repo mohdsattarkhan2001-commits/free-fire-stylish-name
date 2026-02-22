@@ -48,10 +48,54 @@ function getStyledNames(name) {
   }
 
   const transformed = fontMaps.map((map) => convertText(base, map));
-  const decorated = wrappers.map(([left, right]) => `${left}${base}${right}`);
-  const combos = wrappers.map(([left, right], index) => `${left}${transformed[index % transformed.length]}${right}`);
+  const coreNames = [...new Set([base, ...transformed, base.toUpperCase(), `${base}亗`, `${base}ツ`, `${base}メ`])];
+  const prefixes = ["亗", "乂", "『", "⚡", "꧁", "★", "♛", "ツ", "༒", "FF", "ᴷᴵᴺᴳ", "ᶠᶠ"];
+  const suffixes = ["亗", "乂", "』", "⚡", "꧂", "★", "♛", "ツ", "༒", "99", "YT", "PRO", "メ"];
+  const tags = ["FF", "OP", "PRO", "KING", "YT", "X", "007"];
+  const styles = new Set();
+  const targetCount = 100;
 
-  return [...new Set([base, ...transformed, ...decorated, ...combos])];
+  const addStyle = (value) => {
+    const trimmed = value.trim();
+    if (trimmed) {
+      styles.add(trimmed);
+    }
+  };
+
+  coreNames.forEach((core) => {
+    addStyle(core);
+    wrappers.forEach(([left, right]) => {
+      addStyle(`${left}${core}${right}`);
+    });
+  });
+
+  for (const core of coreNames) {
+    for (const prefix of prefixes) {
+      for (const suffix of suffixes) {
+        addStyle(`${prefix}${core}${suffix}`);
+        if (styles.size >= targetCount) {
+          return [...styles].slice(0, targetCount);
+        }
+      }
+    }
+  }
+
+  for (const core of coreNames) {
+    for (const tag of tags) {
+      addStyle(`${tag}•${core}`);
+      addStyle(`${core}•${tag}`);
+      addStyle(`${tag}々${core}々${tag}`);
+      if (styles.size >= targetCount) {
+        return [...styles].slice(0, targetCount);
+      }
+    }
+  }
+
+  while (styles.size < targetCount) {
+    addStyle(`${base}${styles.size}`);
+  }
+
+  return [...styles].slice(0, targetCount);
 }
 
 function renderList(list, values) {
