@@ -23,7 +23,8 @@ const wrappers = [
   ["⚡", "⚡"]
 ];
 
-const randomWords = ["Ghost", "Ninja", "Sniper", "Raven", "Venom", "Blaze", "Storm", "Killer", "Hunter", "Viper"];
+const randomWords = ["Ghost", "Ninja", "Sniper", "Raven", "Venom", "Blaze", "Storm", "Killer", "Hunter", "Viper", "Cobra", "Titan"];
+const freeFireNames = ["Alok", "Kelly", "Hayato", "Moco", "Chrono", "Skyler", "K", "Dimitri", "Tatsuya", "Jota", "Hunter", "Ninja", "Blaze", "Phantom"];
 
 function getRandomName() {
   const word = randomWords[Math.floor(Math.random() * randomWords.length)];
@@ -32,6 +33,7 @@ function getRandomName() {
 }
 
 let defaultPreviewName = getRandomName();
+let defaultStyledCatalog = [];
 
 function convertText(text, map) {
   return text
@@ -41,7 +43,7 @@ function convertText(text, map) {
     .join("");
 }
 
-function getStyledNames(name) {
+function getStyledNames(name, maxCount = 100) {
   const base = name.trim();
   if (!base) {
     return [];
@@ -53,7 +55,6 @@ function getStyledNames(name) {
   const suffixes = ["亗", "乂", "』", "⚡", "꧂", "★", "♛", "ツ", "༒", "99", "YT", "PRO", "メ"];
   const tags = ["FF", "OP", "PRO", "KING", "YT", "X", "007"];
   const styles = new Set();
-  const targetCount = 100;
 
   const addStyle = (value) => {
     const trimmed = value.trim();
@@ -73,8 +74,8 @@ function getStyledNames(name) {
     for (const prefix of prefixes) {
       for (const suffix of suffixes) {
         addStyle(`${prefix}${core}${suffix}`);
-        if (styles.size >= targetCount) {
-          return [...styles].slice(0, targetCount);
+        if (styles.size >= maxCount) {
+          return [...styles].slice(0, maxCount);
         }
       }
     }
@@ -85,14 +86,37 @@ function getStyledNames(name) {
       addStyle(`${tag}•${core}`);
       addStyle(`${core}•${tag}`);
       addStyle(`${tag}々${core}々${tag}`);
-      if (styles.size >= targetCount) {
-        return [...styles].slice(0, targetCount);
+      if (styles.size >= maxCount) {
+        return [...styles].slice(0, maxCount);
       }
     }
   }
 
-  while (styles.size < targetCount) {
+  while (styles.size < maxCount) {
     addStyle(`${base}${styles.size}`);
+  }
+
+  return [...styles].slice(0, maxCount);
+}
+
+function buildDefaultStyles(targetCount = 100) {
+  const styles = new Set();
+  const candidateNames = [defaultPreviewName, ...freeFireNames.map((name) => `${name}${Math.floor(Math.random() * 90 + 10)}`)];
+
+  candidateNames.forEach((candidate) => {
+    getStyledNames(candidate, 10).forEach((style) => {
+      if (styles.size < targetCount) {
+        styles.add(style);
+      }
+    });
+  });
+
+  while (styles.size < targetCount) {
+    getStyledNames(getRandomName(), 10).forEach((style) => {
+      if (styles.size < targetCount) {
+        styles.add(style);
+      }
+    });
   }
 
   return [...styles].slice(0, targetCount);
@@ -140,11 +164,11 @@ function buildPresets(name) {
 function generate() {
   const typedName = nicknameInput.value.trim();
   const activeName = typedName || defaultPreviewName;
-  const styled = getStyledNames(activeName);
+  const styled = typedName ? getStyledNames(activeName, 100) : defaultStyledCatalog;
   const presets = buildPresets(activeName);
 
   if (namePreview) {
-    namePreview.textContent = `Preview: ${styled[0]}`;
+    namePreview.textContent = `Preview: ${styled[0] ?? activeName}`;
   }
   renderList(resultsList, styled);
   renderList(presetList, presets);
@@ -158,6 +182,7 @@ randomBtn.addEventListener("click", () => {
 clearBtn.addEventListener("click", () => {
   nicknameInput.value = "";
   defaultPreviewName = getRandomName();
+  defaultStyledCatalog = buildDefaultStyles(100);
   generate();
 });
 
@@ -169,4 +194,5 @@ nicknameInput.addEventListener("keydown", (event) => {
   }
 });
 
+defaultStyledCatalog = buildDefaultStyles(100);
 generate();
