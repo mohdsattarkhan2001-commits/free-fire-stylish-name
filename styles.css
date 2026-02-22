@@ -1,5 +1,5 @@
 :root {
-  --bg: #0c1020;
+  --bg: #090d25;
   --bg-card: #171c32;
   --text: #f3f5ff;
   --muted: #adb3d1;
@@ -16,7 +16,8 @@ body {
   margin: 0;
   min-height: 100vh;
   font-family: Inter, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
-  background: radial-gradient(circle at top right, #1a2458 0%, var(--bg) 45%);
+  background: radial-gradient(circle at top right, #4a2cff 0%, #1a2458 28%, var(--bg) 64%),
+    linear-gradient(150deg, #090d25 0%, #10173a 40%, #0b1d33 100%);
   color: var(--text);
 }
 
@@ -51,7 +52,7 @@ body {
 }
 
 .card {
-  background: rgba(23, 28, 50, 0.86);
+  background: linear-gradient(140deg, rgba(35, 24, 74, 0.82), rgba(19, 28, 61, 0.9));
   border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 16px;
   padding: 1rem;
@@ -247,4 +248,60 @@ button.ghost {
   .generated-results {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
+}
+
+.content-card {
+  line-height: 1.7;
+}
+
+.content-card h2 {
+  margin: 1.2rem 0 0.45rem;
+  font-size: clamp(1.2rem, 2vw, 1.5rem);
+}
+
+.content-card h3 {
+  margin: 0.8rem 0 0.3rem;
+  font-size: 1.02rem;
+  color: #dde4ff;
+}
+
+.content-card p,
+.content-card li {
+  color: #d4daf5;
+}
+
+.content-card ul,
+.content-card ol {
+  padding-left: 1.1rem;
+}
+
+.content-card table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 0.5rem;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.content-card th,
+.content-card td {
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  padding: 0.55rem 0.65rem;
+  text-align: left;
+}
+
+.content-card th {
+  background: rgba(127, 91, 255, 0.2);
+}
+
+.ad-card {
+  text-align: center;
+  background: linear-gradient(135deg, rgba(79, 56, 188, 0.44), rgba(20, 26, 54, 0.9));
+}
+
+.ad-label {
+  margin: 0 0 0.5rem;
+  color: #b7c1f8;
+  font-size: 0.78rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
 }
